@@ -14,7 +14,7 @@
                 type="email" 
                 v-model="loginForm.email" 
                 required 
-                placeholder="admin@example.com"
+                placeholder="admin@gmail.com"
               />
             </div>
             <div class="form-group">
@@ -261,14 +261,14 @@ input::placeholder {
 }
 
 .error-message {
-  background: #fef2f2;
-  color: #dc2626;
+  background: #f3f4f6;
+  color: #1f2937;  
   padding: 0.75rem 1rem;
   border-radius: 0.375rem;
   margin-top: 1rem;
   text-align: center;
   font-size: 0.875rem;
-  border: 1px solid #fecaca;
+  border: 1px solid #d1d5db;
 }
 
 @media (max-width: 768px) {

@@ -120,17 +120,10 @@ export default {
     },
     async handleLogout() {
       try {
-        // Show confirmation dialog
-        const confirmed = confirm('Apakah Anda yakin ingin logout?')
-        if (!confirmed) return
-        
         await signOut(auth)
         this.isAuthenticated = false
         this.currentUser = null
         this.activeSection = 'Dashboard' // Reset to default section
-        
-        // Optional: Show success message
-        // alert('Berhasil logout')
         
       } catch (error) {
         console.error('Error signing out:', error)
