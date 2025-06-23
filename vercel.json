@@ -1,22 +1,28 @@
 {
-  "routes": [
+  "rewrites": [
     {
-      "src": "/data/(.*)",
-      "dest": "/data/$1",
-      "headers": {
-        "Content-Type": "application/json"
-      }
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/data/(.*)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json"
+        }
+      ]
     },
     {
-      "src": "/maps/(.*)",
-      "dest": "/maps/$1", 
-      "headers": {
-        "Content-Type": "application/json"
-      }
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/maps/(.*)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json"
+        }
+      ]
     }
   ]
 }
