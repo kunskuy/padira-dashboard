@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!data|maps|assets|favicon.ico|robots.txt|sitemap.xml).*)",
       "destination": "/index.html"
     }
   ],
@@ -23,7 +23,7 @@
       "source": "/maps/(.*)",
       "headers": [
         {
-          "key": "Content-Type",
+          "key": "Content-Type", 
           "value": "application/json"
         },
         {
@@ -32,5 +32,10 @@
         }
       ]
     }
-  ]
+  ],
+  "functions": {
+    "app/api/**/*.js": {
+      "runtime": "nodejs18.x"
+    }
+  }
 }
