@@ -1,41 +1,22 @@
 {
-  "rewrites": [
+  "routes": [
     {
-      "source": "/((?!data|maps|assets|favicon.ico|robots.txt|sitemap.xml).*)",
-      "destination": "/index.html"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/data/(.*)",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/json"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600"
-        }
-      ]
+      "src": "/data/(.*)",
+      "dest": "/data/$1",
+      "headers": {
+        "Content-Type": "application/json"
+      }
     },
     {
-      "source": "/maps/(.*)",
-      "headers": [
-        {
-          "key": "Content-Type", 
-          "value": "application/json"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600"
-        }
-      ]
+      "src": "/maps/(.*)",
+      "dest": "/maps/$1", 
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
-  ],
-  "functions": {
-    "app/api/**/*.js": {
-      "runtime": "nodejs18.x"
-    }
-  }
+  ]
 }
