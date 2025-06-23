@@ -345,46 +345,24 @@ export default {
     },
     methods: {
 async loadPetaniData() {
-    // Array path untuk dicoba secara berurutan
-    const paths = [
-        '/data/DataPetani.json',           // Path untuk production (Vercel)
-        '/src/data/DataPetani.json'        // Path untuk development (local)
-    ]
-    
-    for (const path of paths) {
-        try {
-            console.log(`Trying to load petani data from: ${path}`)
-            const response = await fetch(path)
-            
-            if (!response.ok) {
-                console.log(`Failed to load from ${path}: ${response.status}`)
-                continue // Coba path berikutnya
-            }
-            
-            const text = await response.text()
-            
-            // Cek apakah response berisi HTML (error page)
-            if (text.trim().startsWith('<')) {
-                console.log(`Received HTML instead of JSON from ${path}`)
-                continue // Coba path berikutnya
-            }
-            
-            this.petaniData = JSON.parse(text)
-            console.log('Petani data loaded successfully from:', path)
-            console.log('Data:', this.petaniData)
-            this.petaniDataError = null
-            return // Berhasil, keluar dari function
-            
-        } catch (error) {
-            console.error(`Error loading from ${path}:`, error)
-            continue // Coba path berikutnya
+    try {
+        console.log('Loading petani data from: /data/DataPetani.json')
+        const response = await fetch('/data/DataPetani.json')
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
         }
+        
+        const data = await response.json()
+        this.petaniData = data
+        console.log('Petani data loaded successfully:', data)
+        this.petaniDataError = null
+        
+    } catch (error) {
+        console.error('Error loading petani data:', error)
+        this.petaniDataError = 'Data petani tidak dapat dimuat'
+        this.petaniData = []
     }
-    
-    // Jika semua path gagal
-    console.error('Failed to load petani data from all paths')
-    this.petaniDataError = 'Data petani tidak ditemukan'
-    this.petaniData = []
 },
 
         getVillageData(villageName) {
@@ -406,57 +384,35 @@ async loadPetaniData() {
         async loadGeojsonData() {
     this.loadingData = true
     
-    // Array path untuk dicoba secara berurutan
-    const paths = [
-        '/maps/BatasDesaCilamayaWetan.geojson',     // Path untuk production (Vercel)
-        '/src/maps/BatasDesaCilamayaWetan.geojson'  // Path untuk development (local)
-    ]
-    
-    for (const path of paths) {
-        try {
-            console.log(`Trying to load GeoJSON data from: ${path}`)
-            const response = await fetch(path)
-            
-            if (!response.ok) {
-                console.log(`Failed to load from ${path}: ${response.status}`)
-                continue // Coba path berikutnya
-            }
-            
-            const text = await response.text()
-            
-            // Cek apakah response berisi HTML (error page)
-            if (text.trim().startsWith('<')) {
-                console.log(`Received HTML instead of JSON from ${path}`)
-                continue // Coba path berikutnya
-            }
-            
-            this.geojsonData = JSON.parse(text)
-            console.log('GeoJSON data loaded successfully from:', path)
-            
-            // Count total desa
-            if (this.geojsonData && this.geojsonData.features) {
-                this.totalDesa = this.geojsonData.features.length
-            }
-            
-            // Add to map
-            this.addGeojsonToMap()
-            
-            // Fit map to geojson bounds
-            this.fitToGeojsonBounds()
-            
-            this.loadingData = false
-            return // Berhasil, keluar dari function
-            
-        } catch (error) {
-            console.error(`Error loading from ${path}:`, error)
-            continue // Coba path berikutnya
+    try {
+        console.log('Loading GeoJSON data from: /maps/BatasDesaCilamayaWetan.geojson')
+        const response = await fetch('/maps/BatasDesaCilamayaWetan.geojson')
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
         }
+        
+        const data = await response.json()
+        this.geojsonData = data
+        console.log('GeoJSON data loaded successfully')
+        
+        // Count total desa
+        if (this.geojsonData && this.geojsonData.features) {
+            this.totalDesa = this.geojsonData.features.length
+        }
+        
+        // Add to map
+        this.addGeojsonToMap()
+        
+        // Fit map to geojson bounds
+        this.fitToGeojsonBounds()
+        
+    } catch (error) {
+        console.error('Error loading GeoJSON data:', error)
+        alert('Gagal memuat data peta. Pastikan file tersedia di server.')
+    } finally {
+        this.loadingData = false
     }
-    
-    // Jika semua path gagal
-    console.error('Failed to load GeoJSON data from all paths')
-    alert('Gagal memuat data peta. Pastikan file BatasDesaCilamayaWetan.geojson tersedia.')
-    this.loadingData = false
 },
 
         addGeojsonToMap() {
