@@ -344,25 +344,47 @@ export default {
         }
     },
     methods: {
-async loadPetaniData() {
-    try {
-        console.log('Loading petani data from: /data/DataPetani.json')
-        const response = await fetch('/data/DataPetani.json')
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`)
+        async loadPetaniData() {
+    const paths = [
+        '/data/DataPetani.json',
+        '/public/data/DataPetani.json',
+        './data/DataPetani.json'
+    ]
+
+    for (const path of paths) {
+        try {
+            console.log(`Trying to load petani data from: ${path}`)
+            const response = await fetch(path)
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`)
+            }
+
+            // Check if response is actually JSON
+            const contentType = response.headers.get('content-type')
+            if (!contentType || !contentType.includes('application/json')) {
+                const text = await response.text()
+                if (text.includes('<!DOCTYPE html>')) {
+                    console.log(`Received HTML instead of JSON from ${path}`)
+                    continue
+                }
+            }
+
+            const data = await response.json()
+            this.petaniData = data
+            console.log('Petani data loaded successfully:', data)
+            this.petaniDataError = null
+            return
+
+        } catch (error) {
+            console.error(`Error loading petani data from ${path}:`, error)
+            continue
         }
-        
-        const data = await response.json()
-        this.petaniData = data
-        console.log('Petani data loaded successfully:', data)
-        this.petaniDataError = null
-        
-    } catch (error) {
-        console.error('Error loading petani data:', error)
-        this.petaniDataError = 'Data petani tidak dapat dimuat'
-        this.petaniData = []
     }
+
+    console.error('Failed to load petani data from all paths')
+    this.petaniDataError = 'Data petani tidak dapat dimuat'
+    this.petaniData = []
 },
 
         getVillageData(villageName) {
@@ -383,36 +405,58 @@ async loadPetaniData() {
 
         async loadGeojsonData() {
     this.loadingData = true
-    
-    try {
-        console.log('Loading GeoJSON data from: /maps/BatasDesaCilamayaWetan.geojson')
-        const response = await fetch('/maps/BatasDesaCilamayaWetan.geojson')
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`)
+
+    const paths = [
+        '/maps/BatasDesaCilamayaWetan.geojson',
+        '/public/maps/BatasDesaCilamayaWetan.geojson',
+        './maps/BatasDesaCilamayaWetan.geojson'
+    ]
+
+    for (const path of paths) {
+        try {
+            console.log(`Trying to load GeoJSON data from: ${path}`)
+            const response = await fetch(path)
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`)
+            }
+
+            // Check if response is actually JSON
+            const contentType = response.headers.get('content-type')
+            const text = await response.text()
+            
+            if (text.includes('<!DOCTYPE html>')) {
+                console.log(`Received HTML instead of JSON from ${path}`)
+                continue
+            }
+
+            const data = JSON.parse(text)
+            this.geojsonData = data
+            console.log('GeoJSON data loaded successfully')
+
+            // Count total desa
+            if (this.geojsonData && this.geojsonData.features) {
+                this.totalDesa = this.geojsonData.features.length
+            }
+
+            // Add to map
+            this.addGeojsonToMap()
+
+            // Fit map to geojson bounds
+            this.fitToGeojsonBounds()
+            
+            this.loadingData = false
+            return
+
+        } catch (error) {
+            console.error(`Error loading GeoJSON data from ${path}:`, error)
+            continue
         }
-        
-        const data = await response.json()
-        this.geojsonData = data
-        console.log('GeoJSON data loaded successfully')
-        
-        // Count total desa
-        if (this.geojsonData && this.geojsonData.features) {
-            this.totalDesa = this.geojsonData.features.length
-        }
-        
-        // Add to map
-        this.addGeojsonToMap()
-        
-        // Fit map to geojson bounds
-        this.fitToGeojsonBounds()
-        
-    } catch (error) {
-        console.error('Error loading GeoJSON data:', error)
-        alert('Gagal memuat data peta. Pastikan file tersedia di server.')
-    } finally {
-        this.loadingData = false
     }
+
+    console.error('Failed to load GeoJSON data from all paths')
+    alert('Gagal memuat data peta. Pastikan file tersedia di server.')
+    this.loadingData = false
 },
 
         addGeojsonToMap() {
