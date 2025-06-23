@@ -26,7 +26,8 @@ import {
   NewspaperIcon,
   BellIcon,
   MapPinIcon,
-  UsersIcon
+  UsersIcon,
+  MapIcon
 } from 'lucide-vue-next'
 
 export default {
@@ -44,7 +45,8 @@ export default {
     NewspaperIcon,
     BellIcon,
     MapPinIcon,
-    UsersIcon
+    UsersIcon,
+    MapIcon
   },
   data() {
     return {
@@ -56,6 +58,7 @@ export default {
         { section: 'Input Berita', icon: 'NewspaperIcon' },
         { section: 'Input Notifikasi', icon: 'BellIcon' },
         { section: 'Lokasi', icon: 'MapPinIcon' },
+        { section: 'Sebaran Petani', icon: 'MapIcon' },
         { section: 'Pengguna', icon: 'UsersIcon' }
       ]
     }

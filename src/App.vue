@@ -29,6 +29,7 @@ import Price from './views/Price.vue'
 import News from './views/News.vue'
 import Notification from './views/Notification.vue'
 import Location from './views/Location.vue'
+import SebaranPetani from './views/SebaranPetani.vue'
 import User from './views/User.vue'
 
 export default {
@@ -45,6 +46,7 @@ export default {
     News,
     Notification,
     Location,
+    SebaranPetani,
     User
   },
   data() {
@@ -65,6 +67,7 @@ export default {
         'Input Berita': News,
         'Input Notifikasi': Notification,
         'Lokasi': Location,
+        'Sebaran Petani': SebaranPetani,
         'Pengguna': User
       }
       return viewMap[this.activeSection]

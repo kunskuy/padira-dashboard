@@ -1,0 +1,74 @@
+[
+  {
+    "desa": "Cikarang",
+    "jumlah_poktan": 9,
+    "luas_ha": 299.9,
+    "jumlah_petani": 322
+  },
+  {
+    "desa": "Cikalong",
+    "jumlah_poktan": 7,
+    "luas_ha": 286.5,
+    "jumlah_petani": 376
+  },
+  {
+    "desa": "Rawagempol Wetan",
+    "jumlah_poktan": 8,
+    "luas_ha": 415.2,
+    "jumlah_petani": 239
+  },
+  {
+    "desa": "Rawagempol Kulon",
+    "jumlah_poktan": 8,
+    "luas_ha": 474.6,
+    "jumlah_petani": 304
+  },
+  {
+    "desa": "Sukakerta",
+    "jumlah_poktan": 8,
+    "luas_ha": 484.3,
+    "jumlah_petani": 321
+  },
+  {
+    "desa": "Cilamaya",
+    "jumlah_poktan": 7,
+    "luas_ha": 247.1,
+    "jumlah_petani": 179
+  },
+  {
+    "desa": "Mekarmaya",
+    "jumlah_poktan": 8,
+    "luas_ha": 283.6,
+    "jumlah_petani": 210
+  },
+  {
+    "desa": "Tegalsari",
+    "jumlah_poktan": 5,
+    "luas_ha": 132.9,
+    "jumlah_petani": 111
+  },
+  {
+    "desa": "Tegalwaru",
+    "jumlah_poktan": 10,
+    "luas_ha": 322.6,
+    "jumlah_petani": 298
+  },
+  {
+    "desa": "Muara",
+    "jumlah_poktan": 11,
+    "luas_ha": 873.2,
+    "jumlah_petani": 613
+  },
+  {
+    "desa": "Sukatani",
+    "jumlah_poktan": 14,
+    "luas_ha": 656.3,
+    "jumlah_petani": 472
+  },
+  {
+    "desa": "Muarabaru",
+    "jumlah_poktan": 11,
+    "luas_ha": 621.6,
+    "jumlah_petani": 271
+  }
+]
