@@ -1,10 +1,28 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [
+  "routes": [
     {
-      "source": "^/(?!data/|maps/|assets/|favicon\\.ico).*$",
-      "destination": "/index.html"
+      "src": "/data/(.*)",
+      "dest": "/data/$1",
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    },
+    {
+      "src": "/maps/(.*)",
+      "dest": "/maps/$1",
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
