@@ -347,7 +347,7 @@ export default {
         async loadPetaniData() {
             try {
                 console.log('Loading petani data...')
-                const response = await fetch('./data/DataPetani.json')
+                const response = await fetch('https://raw.githubusercontent.com/kunskuy/padira-dashboard/main/public/data/DataPetani.json')
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`)
@@ -364,6 +364,7 @@ export default {
                 this.petaniData = []
             }
         },
+
 
         getVillageData(villageName) {
             if (!villageName || !this.petaniData || this.petaniDataError) return null
@@ -386,7 +387,7 @@ export default {
 
             try {
                 console.log('Loading GeoJSON data...')
-                const response = await fetch('./maps/BatasDesaCilamayaWetan.geojson')
+                const response = await fetch('https://raw.githubusercontent.com/kunskuy/padira-dashboard/main/public/maps/BatasDesaCilamayaWetan.geojson')
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`)

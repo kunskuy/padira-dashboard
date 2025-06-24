@@ -1,28 +1,8 @@
 {
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "routes": [
+  "rewrites": [
     {
-      "src": "/data/(.*)",
-      "dest": "/data/$1",
-      "headers": {
-        "Content-Type": "application/json"
-      }
-    },
-    {
-      "src": "/maps/(.*)",
-      "dest": "/maps/$1",
-      "headers": {
-        "Content-Type": "application/json"
-      }
-    },
-    {
-      "src": "/assets/(.*)",
-      "dest": "/assets/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
