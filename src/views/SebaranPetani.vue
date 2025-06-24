@@ -397,9 +397,26 @@ export default {
                 this.geojsonData = data
                 console.log('GeoJSON data loaded successfully')
 
-                // Count total desa
+                // Count total desa dengan validasi yang lebih ketat
                 if (this.geojsonData && this.geojsonData.features) {
-                    this.totalDesa = this.geojsonData.features.length
+                    // Filter hanya features yang memiliki nama desa yang valid
+                    const validVillages = this.geojsonData.features.filter(feature => {
+                        return feature &&
+                            feature.properties &&
+                            feature.properties.NAMOBJ &&
+                            feature.properties.NAMOBJ.trim() !== '' &&
+                            feature.geometry &&
+                            feature.geometry.coordinates
+                    })
+
+                    this.totalDesa = validVillages.length
+
+                    // Debug: tampilkan nama-nama desa untuk verifikasi
+                    console.log('Desa yang ditemukan:', validVillages.map(f => f.properties.NAMOBJ))
+                    console.log('Total desa valid:', this.totalDesa)
+
+                    // Update geojsonData dengan hanya features yang valid
+                    this.geojsonData.features = validVillages
                 }
 
                 // Add to map
